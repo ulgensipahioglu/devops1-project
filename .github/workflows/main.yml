@@ -1,0 +1,39 @@
+# Name of the automation workflow
+name: Python Application CI
+
+# Define when this robot should wake up and run
+on:
+  push:
+    # Trigger when code is pushed to main or our feature branch
+    branches: [ "main", "feature/time-calculator" ]
+  pull_request:
+    # Trigger when someone opens a Pull Request to main branch
+    branches: [ "main" ]
+
+# The actual tasks the robot will perform
+jobs:
+  build-and-test:
+    # Rent a clean, neutral virtual computer from GitHub running Linux
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Download our project code into the virtual computer
+    - name: Checkout repository code
+      uses: actions/checkout@v4
+
+    # Step 2: Install Python version 3.10 inside the virtual computer
+    - name: Set up Python environment
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
+
+    # Step 3: Upgrade pip and install pytest library for our tests
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest
+
+    # Step 4: Run our automated tests using the pytest tool
+    - name: Run automated pytest tests
+      run: |
+        pytest
