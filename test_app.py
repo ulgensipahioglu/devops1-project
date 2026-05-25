@@ -15,4 +15,3 @@ def test_empty_hours():
 # Test with overtime hours included
 def test_overtime_hours():
     assert calculate_total_hours([10, 10, 8, 8, 8]) == 44
-
